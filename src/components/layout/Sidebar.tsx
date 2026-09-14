@@ -28,7 +28,7 @@ export function Sidebar({
   const { dayStats } = useGoals();
 
   const navItems = [
-    { to: '/', label: t('nav.today'), icon: <LayoutDashboard className="w-4 h-4" /> },
+    { to: '/app', label: t('nav.today'), icon: <LayoutDashboard className="w-4 h-4" /> },
     { to: '/schedule', label: t('nav.schedule'), icon: <Clock className="w-4 h-4" /> },
     { to: '/calendar', label: t('nav.calendar'), icon: <CalendarDays className="w-4 h-4" /> },
     { to: '/tasks', label: t('nav.tasks'), icon: <CheckSquare className="w-4 h-4" /> },
@@ -41,9 +41,9 @@ export function Sidebar({
     <aside className="hidden lg:flex flex-col w-60 h-screen sticky top-0 border-r border-border bg-card p-3.5 select-none shrink-0 z-30">
       {/* Brand */}
       <div className="px-2 py-3 mb-3">
-        <Link to="/" className="block">
+        <Link to="/app" className="block">
           <h1 className="font-serif text-lg font-semibold tracking-tight text-foreground flex items-center gap-1.5">
-            DayFlow
+            RoutineUp
             <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
           </h1>
           <p className="text-[11px] text-muted-foreground mt-0.5">

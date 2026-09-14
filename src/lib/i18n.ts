@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import enTranslation from '../locales/en/translation.json';
 import idTranslation from '../locales/id/translation.json';
 
-export const LANGUAGE_STORAGE_KEY = 'dayflow-language';
+export const LANGUAGE_STORAGE_KEY = 'routineup-language';
 
 const getInitialLanguage = (): string => {
   if (typeof window !== 'undefined') {

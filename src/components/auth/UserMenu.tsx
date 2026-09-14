@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut, User, Sparkles, Database, ChevronDown } from 'lucide-react';
+import { LogOut, User, Database, ChevronDown } from 'lucide-react';
 
 interface UserMenuProps {
   onOpenAuth: () => void;
@@ -9,7 +10,8 @@ interface UserMenuProps {
 
 export function UserMenu({ onOpenAuth }: UserMenuProps) {
   const { t } = useTranslation();
-  const { user, signOut, isDemo } = useAuth();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!user) {
@@ -47,15 +49,9 @@ export function UserMenu({ onOpenAuth }: UserMenuProps) {
             {user.full_name || user.email.split('@')[0]}
           </p>
           <div className="flex items-center gap-1 mt-0.5">
-            {isDemo ? (
-              <span className="text-[10px] text-[#B8860B] font-medium flex items-center gap-0.5">
-                <Sparkles className="w-2.5 h-2.5" /> {t('auth.demoModeBadge')}
-              </span>
-            ) : (
-              <span className="text-[10px] text-[#5E8C61] font-medium flex items-center gap-0.5">
-                <Database className="w-2.5 h-2.5" /> Supabase
-              </span>
-            )}
+            <span className="text-[10px] text-[#5E8C61] font-medium flex items-center gap-0.5">
+              <Database className="w-2.5 h-2.5" /> Supabase
+            </span>
           </div>
         </div>
 
@@ -78,23 +74,11 @@ export function UserMenu({ onOpenAuth }: UserMenuProps) {
               </p>
             </div>
 
-            {isDemo ? (
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  onOpenAuth();
-                }}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 text-xs text-primary hover:bg-primary/5 rounded transition-colors cursor-pointer"
-              >
-                <Database className="w-3.5 h-3.5" />
-                <span>{t('auth.connectCloud')}</span>
-              </button>
-            ) : null}
-
             <button
-              onClick={() => {
+              onClick={async () => {
                 setIsOpen(false);
-                signOut();
+                await signOut();
+                navigate({ to: '/' });
               }}
               className="w-full flex items-center gap-2 px-2.5 py-1.5 text-xs text-[#BF4040] hover:bg-[#BF4040]/5 rounded transition-colors cursor-pointer"
             >

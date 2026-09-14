@@ -6,14 +6,14 @@ import { localStore } from '../lib/storage';
 import { isToday, parseISO } from 'date-fns';
 
 export function useTasks() {
-  const { user, isDemo, isConfigured } = useAuth();
+  const { user, isConfigured } = useAuth();
   const queryClient = useQueryClient();
 
   const tasksQuery = useQuery({
-    queryKey: ['tasks', user?.id, isDemo],
+    queryKey: ['tasks', user?.id],
     queryFn: async (): Promise<Task[]> => {
-      if (!isConfigured || isDemo) {
-        return localStore.getTasks();
+      if (!isConfigured || !user) {
+        return [];
       }
 
       const { data, error } = await supabase
@@ -56,10 +56,7 @@ export function useTasks() {
         created_at: new Date().toISOString(),
       };
 
-      if (!isConfigured || isDemo) {
-        const current = localStore.getTasks();
-        const updated = [taskToInsert, ...current];
-        localStore.setTasks(updated);
+      if (!isConfigured || !user) {
         return taskToInsert;
       }
 
@@ -85,12 +82,7 @@ export function useTasks() {
     mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {
       const completed_at = completed ? new Date().toISOString() : null;
 
-      if (!isConfigured || isDemo) {
-        const current = localStore.getTasks();
-        const updated = current.map((t) =>
-          t.id === id ? { ...t, completed, completed_at } : t
-        );
-        localStore.setTasks(updated);
+      if (!isConfigured || !user) {
         return { id, completed };
       }
 
@@ -110,10 +102,7 @@ export function useTasks() {
   // Update Mutation
   const updateMutation = useMutation({
     mutationFn: async (updated: Task) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getTasks();
-        const next = current.map((t) => (t.id === updated.id ? updated : t));
-        localStore.setTasks(next);
+      if (!isConfigured || !user) {
         return updated;
       }
 
@@ -135,10 +124,7 @@ export function useTasks() {
   // Delete Mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getTasks();
-        const next = current.filter((t) => t.id !== id);
-        localStore.setTasks(next);
+      if (!isConfigured || !user) {
         return id;
       }
 

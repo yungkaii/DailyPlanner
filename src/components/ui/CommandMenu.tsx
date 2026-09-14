@@ -101,7 +101,7 @@ export function CommandMenu({
       group: t('command.groupNav'),
       action: () => {
         onClose();
-        navigate({ to: '/' });
+        navigate({ to: '/app' });
       },
     },
     {

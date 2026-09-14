@@ -19,7 +19,7 @@ export function MobileNav({ onOpenCommand }: MobileNavProps) {
   const location = useLocation();
 
   const links = [
-    { to: '/', label: t('nav.today'), icon: <LayoutDashboard className="w-4 h-4" /> },
+    { to: '/app', label: t('nav.today'), icon: <LayoutDashboard className="w-4 h-4" /> },
     { to: '/schedule', label: t('nav.schedule'), icon: <Clock className="w-4 h-4" /> },
     { to: '/tasks', label: t('nav.tasks'), icon: <CheckSquare className="w-4 h-4" /> },
     { to: '/habits', label: t('nav.habits'), icon: <Flame className="w-4 h-4" /> },

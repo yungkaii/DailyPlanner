@@ -8,11 +8,11 @@ import {
 } from './mockData';
 
 const KEYS = {
-  SCHEDULES: 'dayflow_schedules_v1',
-  TASKS: 'dayflow_tasks_v1',
-  HABITS: 'dayflow_habits_v1',
-  HABIT_LOGS: 'dayflow_habit_logs_v1',
-  GOALS: 'dayflow_goals_v1',
+  SCHEDULES: 'routineup_schedules_v1',
+  TASKS: 'routineup_tasks_v1',
+  HABITS: 'routineup_habits_v1',
+  HABIT_LOGS: 'routineup_habit_logs_v1',
+  GOALS: 'routineup_goals_v1',
 };
 
 export const localStore = {

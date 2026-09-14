@@ -7,14 +7,14 @@ import { calculateScheduleStatus } from '../lib/utils';
 import { isToday, parseISO } from 'date-fns';
 
 export function useSchedules() {
-  const { user, isDemo, isConfigured } = useAuth();
+  const { user, isConfigured } = useAuth();
   const queryClient = useQueryClient();
 
   const schedulesQuery = useQuery({
-    queryKey: ['schedules', user?.id, isDemo],
+    queryKey: ['schedules', user?.id],
     queryFn: async (): Promise<Schedule[]> => {
-      if (!isConfigured || isDemo) {
-        return localStore.getSchedules();
+      if (!isConfigured || !user) {
+        return [];
       }
 
       const { data, error } = await supabase
@@ -56,10 +56,7 @@ export function useSchedules() {
         created_at: new Date().toISOString(),
       };
 
-      if (!isConfigured || isDemo) {
-        const current = localStore.getSchedules();
-        const updated = [...current, scheduleToInsert];
-        localStore.setSchedules(updated);
+      if (!isConfigured || !user) {
         return scheduleToInsert;
       }
 
@@ -83,10 +80,7 @@ export function useSchedules() {
   // Update Mutation
   const updateMutation = useMutation({
     mutationFn: async (updated: Schedule) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getSchedules();
-        const next = current.map((s) => (s.id === updated.id ? updated : s));
-        localStore.setSchedules(next);
+      if (!isConfigured || !user) {
         return updated;
       }
 
@@ -108,10 +102,7 @@ export function useSchedules() {
   // Delete Mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getSchedules();
-        const next = current.filter((s) => s.id !== id);
-        localStore.setSchedules(next);
+      if (!isConfigured || !user) {
         return id;
       }
 

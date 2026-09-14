@@ -1,18 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { UserProfile } from '../types';
-import { DEMO_USER } from '../lib/mockData';
 
 interface AuthContextType {
   user: UserProfile | null;
   loading: boolean;
   isConfigured: boolean;
-  isDemo: boolean;
   signIn: (email: string, password: string) => Promise<{ error?: string }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
-  enableDemoMode: () => void;
-  disableDemoMode: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,22 +17,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const configured = isSupabaseConfigured();
-  
-  // By default, if Supabase is not configured, we start in Demo mode with DEMO_USER
-  const [isDemo, setIsDemo] = useState<boolean>(() => {
-    if (!configured) return true;
-    const stored = localStorage.getItem('dayflow_demo_mode');
-    return stored === 'true';
-  });
 
   useEffect(() => {
-    if (!configured || isDemo) {
-      setUser(DEMO_USER);
+    if (!configured) {
+      setUser(null);
       setLoading(false);
       return;
     }
 
-    // Set up Supabase auth listener
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser({
@@ -68,17 +56,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [configured, isDemo]);
+  }, [configured]);
 
   const signIn = async (email: string, password: string) => {
     if (!configured) {
-      return { error: 'Supabase is not configured yet. You can use Demo Mode in the meantime!' };
+      return { error: 'Supabase is not configured yet. Add VITE_SUPABASE_URL to your .env file to enable authentication.' };
     }
+
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) return { error: error.message };
-      setIsDemo(false);
-      localStorage.setItem('dayflow_demo_mode', 'false');
       return {};
     } catch (err: any) {
       return { error: err.message || 'An error occurred during sign in' };
@@ -89,6 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!configured) {
       return { error: 'Supabase is not configured yet. Add VITE_SUPABASE_URL to your .env file to enable cloud authentication.' };
     }
+
     try {
       const { error } = await supabase.auth.signUp({
         email,
@@ -98,8 +86,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
       if (error) return { error: error.message };
-      setIsDemo(false);
-      localStorage.setItem('dayflow_demo_mode', 'false');
       return {};
     } catch (err: any) {
       return { error: err.message || 'An error occurred during sign up' };
@@ -107,23 +93,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
-    if (configured && !isDemo) {
+    if (configured) {
       await supabase.auth.signOut();
     }
     setUser(null);
-  };
-
-  const enableDemoMode = () => {
-    setIsDemo(true);
-    localStorage.setItem('dayflow_demo_mode', 'true');
-    setUser(DEMO_USER);
-  };
-
-  const disableDemoMode = () => {
-    if (configured) {
-      setIsDemo(false);
-      localStorage.setItem('dayflow_demo_mode', 'false');
-    }
   };
 
   return (
@@ -132,12 +105,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         loading,
         isConfigured: configured,
-        isDemo,
         signIn,
         signUp,
         signOut,
-        enableDemoMode,
-        disableDemoMode,
       }}
     >
       {children}

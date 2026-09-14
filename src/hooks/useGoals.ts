@@ -9,7 +9,7 @@ import { useHabits } from './useHabits';
 import { differenceInMinutes, parseISO } from 'date-fns';
 
 export function useGoals() {
-  const { user, isDemo, isConfigured } = useAuth();
+  const { user, isConfigured } = useAuth();
   const queryClient = useQueryClient();
 
   const { todaySchedules } = useSchedules();
@@ -17,10 +17,10 @@ export function useGoals() {
   const { habitStats, completedHabitsToday } = useHabits();
 
   const goalsQuery = useQuery({
-    queryKey: ['goals', user?.id, isDemo],
+    queryKey: ['goals', user?.id],
     queryFn: async (): Promise<Goal[]> => {
-      if (!isConfigured || isDemo) {
-        return localStore.getGoals();
+      if (!isConfigured || !user) {
+        return [];
       }
 
       const { data, error } = await supabase
@@ -104,9 +104,7 @@ export function useGoals() {
         updated_at: new Date().toISOString(),
       };
 
-      if (!isConfigured || isDemo) {
-        const current = localStore.getGoals();
-        localStore.setGoals([...current, goalToInsert]);
+      if (!isConfigured || !user) {
         return goalToInsert;
       }
 
@@ -127,19 +125,7 @@ export function useGoals() {
   // Update Goal Progress
   const updateMutation = useMutation({
     mutationFn: async ({ id, currentValue, status }: { id: string; currentValue: number; status?: Goal['status'] }) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getGoals();
-        const next = current.map((g) =>
-          g.id === id
-            ? {
-                ...g,
-                current_value: currentValue,
-                status: status || (currentValue >= g.target_value ? 'completed' : g.status),
-                updated_at: new Date().toISOString(),
-              }
-            : g
-        );
-        localStore.setGoals(next);
+      if (!isConfigured || !user) {
         return;
       }
 
@@ -160,9 +146,7 @@ export function useGoals() {
   // Delete Goal
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getGoals();
-        localStore.setGoals(current.filter((g) => g.id !== id));
+      if (!isConfigured || !user) {
         return id;
       }
 

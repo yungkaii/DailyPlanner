@@ -6,15 +6,15 @@ import { localStore } from '../lib/storage';
 import { format, subDays, parseISO, isSameDay } from 'date-fns';
 
 export function useHabits() {
-  const { user, isDemo, isConfigured } = useAuth();
+  const { user, isConfigured } = useAuth();
   const queryClient = useQueryClient();
   const todayStr = format(new Date(), 'yyyy-MM-dd');
 
   const habitsQuery = useQuery({
-    queryKey: ['habits', user?.id, isDemo],
+    queryKey: ['habits', user?.id],
     queryFn: async (): Promise<Habit[]> => {
-      if (!isConfigured || isDemo) {
-        return localStore.getHabits();
+      if (!isConfigured || !user) {
+        return [];
       }
 
       const { data, error } = await supabase
@@ -34,10 +34,10 @@ export function useHabits() {
   });
 
   const habitLogsQuery = useQuery({
-    queryKey: ['habit_logs', user?.id, isDemo],
+    queryKey: ['habit_logs', user?.id],
     queryFn: async (): Promise<HabitLog[]> => {
-      if (!isConfigured || isDemo) {
-        return localStore.getHabitLogs();
+      if (!isConfigured || !user) {
+        return [];
       }
 
       const { data, error } = await supabase
@@ -111,24 +111,7 @@ export function useHabits() {
         (l) => l.habit_id === habitId && l.completed_date === dateStr
       );
 
-      if (!isConfigured || isDemo) {
-        const currentLogs = localStore.getHabitLogs();
-        let nextLogs: HabitLog[];
-        if (existing) {
-          nextLogs = currentLogs.filter(
-            (l) => !(l.habit_id === habitId && l.completed_date === dateStr)
-          );
-        } else {
-          const newLog: HabitLog = {
-            id: `log-${habitId}-${dateStr}-${Date.now()}`,
-            habit_id: habitId,
-            user_id: user?.id || 'demo-user',
-            completed_date: dateStr,
-            created_at: new Date().toISOString(),
-          };
-          nextLogs = [...currentLogs, newLog];
-        }
-        localStore.setHabitLogs(nextLogs);
+      if (!isConfigured || !user) {
         return;
       }
 
@@ -165,9 +148,7 @@ export function useHabits() {
         created_at: new Date().toISOString(),
       };
 
-      if (!isConfigured || isDemo) {
-        const current = localStore.getHabits();
-        localStore.setHabits([...current, habitToInsert]);
+      if (!isConfigured || !user) {
         return habitToInsert;
       }
 
@@ -191,11 +172,7 @@ export function useHabits() {
   // Delete habit mutation
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      if (!isConfigured || isDemo) {
-        const current = localStore.getHabits();
-        localStore.setHabits(current.filter((h) => h.id !== id));
-        const currentLogs = localStore.getHabitLogs();
-        localStore.setHabitLogs(currentLogs.filter((l) => l.habit_id !== id));
+      if (!isConfigured || !user) {
         return id;
       }
 

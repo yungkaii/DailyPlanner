@@ -8,17 +8,26 @@ import { AlertCircle } from 'lucide-react';
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialMode?: 'signin' | 'signup';
+  onSuccess?: () => void;
 }
 
-export function AuthModal({ isOpen, onClose }: AuthModalProps) {
+export function AuthModal({ isOpen, onClose, initialMode = 'signin', onSuccess }: AuthModalProps) {
   const { t } = useTranslation();
-  const { signIn, signUp, isConfigured, enableDemoMode } = useAuth();
-  const [isSignUp, setIsSignUp] = useState(false);
+  const { signIn, signUp, isConfigured } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(initialMode === 'signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setIsSignUp(initialMode === 'signup');
+      setError(null);
+    }
+  }, [isOpen, initialMode]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +41,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           setError(res.error);
         } else {
           onClose();
+          onSuccess?.();
         }
       } else {
         const res = await signIn(email, password);
@@ -39,6 +49,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           setError(res.error);
         } else {
           onClose();
+          onSuccess?.();
         }
       }
     } catch (err: any) {
@@ -46,11 +57,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleUseDemo = () => {
-    enableDemoMode();
-    onClose();
   };
 
   return (
@@ -111,7 +117,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="alex@dayflow.app"
+                placeholder="alex@routineup.app"
                 className="w-full px-3 py-1.5 text-xs rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
@@ -148,19 +154,13 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           </form>
         ) : null}
 
-        <div className="pt-2 border-t border-border space-y-2">
-          <Button
-            type="button"
-            variant={isConfigured ? 'secondary' : 'primary'}
-            className="w-full justify-center"
-            onClick={handleUseDemo}
-          >
-            {t('auth.continueLocal')}
-          </Button>
-          <p className="text-[11px] text-center text-muted-foreground">
-            {t('auth.preconfiguredHint')}
-          </p>
-        </div>
+        {!isConfigured && (
+          <div className="pt-2 border-t border-border">
+            <p className="text-[11px] text-center text-muted-foreground">
+              {t('auth.preconfiguredHint')}
+            </p>
+          </div>
+        )}
       </div>
     </Modal>
   );

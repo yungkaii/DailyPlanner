@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { useLiveTime } from '../../hooks/useLiveTime';
 import { UserMenu } from '../auth/UserMenu';
 import {
@@ -13,6 +14,7 @@ import {
   Flame,
   Target,
   ChevronDown,
+  Globe,
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -35,8 +37,13 @@ export function Header({
 }: HeaderProps) {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
   const { timeString, dateString } = useLiveTime();
   const [isAddMenuOpen, setIsAddMenuOpen] = useState(false);
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'id' : 'en');
+  };
 
   return (
     <header className="sticky top-0 z-20 h-14 border-b border-border bg-card px-4 sm:px-6 flex items-center justify-between">
@@ -129,6 +136,16 @@ export function Header({
             </>
           )}
         </div>
+
+        {/* Language Toggle */}
+        <button
+          onClick={toggleLanguage}
+          aria-label="Toggle language"
+          className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-muted/40 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+        >
+          <Globe className="w-3.5 h-3.5" />
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-wide">{language}</span>
+        </button>
 
         {/* Theme Toggle */}
         <button

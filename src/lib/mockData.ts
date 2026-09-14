@@ -3,7 +3,7 @@ import { Schedule, Task, Habit, HabitLog, Goal, UserProfile } from '../types';
 
 export const DEMO_USER: UserProfile = {
   id: 'demo-user-123',
-  email: 'alex.rivera@dayflow.app',
+  email: 'alex.rivera@routineup.app',
   full_name: 'Alex Rivera',
   avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
@@ -79,7 +79,7 @@ export function getInitialSchedules(): Schedule[] {
       color: '#3b82f6',
       recurring: 'none',
       status: 'upcoming',
-      location: 'DayFlow Lab',
+      location: 'RoutineUp Lab',
     },
     {
       id: 'sched-5',
@@ -209,7 +209,7 @@ export function getInitialHabits(): Habit[] {
     {
       id: 'habit-4',
       user_id: DEMO_USER.id,
-      title: 'Zero Inbox & Daily DayFlow Review',
+      title: 'Zero Inbox & Daily RoutineUp Review',
       description: 'Clear notifications and prepare schedule for the next morning',
       category: 'Personal',
       time_of_day: 'evening',
@@ -257,7 +257,7 @@ export function getInitialGoals(): Goal[] {
     {
       id: 'goal-1',
       user_id: DEMO_USER.id,
-      title: 'Launch DayFlow MVP v1.0',
+      title: 'Launch RoutineUp MVP v1.0',
       description: 'Deliver responsive, polished daily planner with Supabase and TanStack Stack',
       category: 'Work',
       target_date: format(addHours(new Date(), 24 * 14), 'yyyy-MM-dd'),
