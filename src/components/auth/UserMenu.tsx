@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut, User, Database, ChevronDown } from 'lucide-react';
+import { LogOut, User, Database, ChevronDown, Target, Settings } from 'lucide-react';
 
 interface UserMenuProps {
   onOpenAuth: () => void;
@@ -72,6 +72,31 @@ export function UserMenu({ onOpenAuth }: UserMenuProps) {
               <p className="text-[11px] text-muted-foreground truncate">
                 {user.email}
               </p>
+            </div>
+
+            <div className="py-1 border-b border-border/70 mb-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate({ to: '/goals' });
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 text-xs text-foreground hover:bg-muted rounded transition-colors cursor-pointer text-left"
+              >
+                <Target className="w-3.5 h-3.5 text-primary" />
+                <span>{t('nav.goals')}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate({ to: '/settings' });
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 text-xs text-foreground hover:bg-muted rounded transition-colors cursor-pointer text-left"
+              >
+                <Settings className="w-3.5 h-3.5 text-muted-foreground" />
+                <span>{t('nav.settings')}</span>
+              </button>
             </div>
 
             <button

@@ -46,14 +46,14 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 h-14 border-b border-border bg-card px-4 sm:px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-20 h-14 border-b border-border bg-card px-3 sm:px-6 flex items-center justify-between gap-2 select-none">
       {/* Left: Clock & Date */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-muted/40 border border-border">
+      <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-md bg-muted/40 border border-border">
           <span className="font-mono text-xs font-semibold text-foreground">
             {timeString}
           </span>
-          <span className="text-muted-foreground/50">·</span>
+          <span className="text-muted-foreground/50 hidden xs:inline">·</span>
           <span className="text-xs text-muted-foreground hidden sm:inline">
             {dateString}
           </span>
@@ -61,15 +61,17 @@ export function Header({
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-2 sm:gap-2.5">
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
         {/* Search / Command trigger */}
         <button
           onClick={onOpenCommand}
-          className="flex items-center gap-2 px-2.5 py-1.5 rounded-md border border-border bg-muted/40 text-muted-foreground hover:text-foreground transition-colors text-xs cursor-pointer"
+          aria-label={t('common.search')}
+          title={t('common.search')}
+          className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 rounded-md border border-border bg-muted/40 text-muted-foreground hover:text-foreground transition-colors text-xs cursor-pointer"
         >
           <Search className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{t('common.search')}</span>
-          <kbd className="hidden sm:inline text-[10px] bg-card px-1.5 py-0.5 rounded border border-border font-mono">
+          <kbd className="hidden md:inline text-[10px] bg-card px-1.5 py-0.5 rounded border border-border font-mono">
             ⌘K
           </kbd>
         </button>
@@ -80,7 +82,9 @@ export function Header({
             size="sm"
             onClick={() => setIsAddMenuOpen(!isAddMenuOpen)}
             leftIcon={<Plus className="w-3.5 h-3.5" />}
-            rightIcon={<ChevronDown className="w-3 h-3 ml-0.5" />}
+            rightIcon={<ChevronDown className="w-3 h-3 ml-0.5 hidden sm:inline" />}
+            className="px-2 sm:px-3"
+            aria-label={t('nav.new')}
           >
             <span className="hidden sm:inline">{t('nav.new')}</span>
           </Button>
@@ -141,10 +145,10 @@ export function Header({
         <button
           onClick={toggleLanguage}
           aria-label="Toggle language"
-          className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-muted/40 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 p-1.5 sm:px-2 sm:py-1 rounded-md border border-border bg-muted/40 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
         >
           <Globe className="w-3.5 h-3.5" />
-          <span className="text-[10px] font-mono font-semibold uppercase tracking-wide">{language}</span>
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-wide hidden xs:inline">{language}</span>
         </button>
 
         {/* Theme Toggle */}
