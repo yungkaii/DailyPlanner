@@ -6,6 +6,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { Sun, Moon, Globe, Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { InstallButton } from '../pwa/InstallButton';
 
 interface LandingNavbarProps {
   onOpenAuth: (mode: 'signin' | 'signup') => void;
@@ -26,6 +27,7 @@ export function LandingNavbar({ onOpenAuth }: LandingNavbarProps) {
     { href: '#features', label: t('landing.nav.features') },
     { href: '#how-it-works', label: t('landing.nav.howItWorks') },
     { href: '#preview', label: t('landing.nav.overview') },
+    { href: '#install', label: t('landing.nav.install') },
   ];
 
   return (
@@ -81,6 +83,8 @@ export function LandingNavbar({ onOpenAuth }: LandingNavbarProps) {
               <Moon className="w-3.5 h-3.5 text-foreground" />
             )}
           </button>
+
+          <InstallButton variant="outline" size="sm" className="hidden lg:inline-flex" />
 
           <div className="w-px h-4 bg-border mx-1" />
 
@@ -158,6 +162,11 @@ export function LandingNavbar({ onOpenAuth }: LandingNavbarProps) {
           </div>
 
           <div className="pt-1 flex flex-col gap-2">
+            <InstallButton
+              variant="outline"
+              size="md"
+              className="w-full justify-center"
+            />
             {user ? (
               <Link to="/app" onClick={() => setMobileMenuOpen(false)} className="w-full">
                 <Button size="md" className="w-full justify-center">

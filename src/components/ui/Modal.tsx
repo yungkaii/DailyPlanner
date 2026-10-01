@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -49,7 +50,10 @@ export function Modal({
     xl: 'max-w-xl',
   };
 
-  return (
+  // Portal to <body>: an ancestor with a transform (e.g. RevealOnScroll's
+  // translate3d) turns position:fixed into ancestor-relative, which would
+  // strand the modal off-screen instead of centering it in the viewport.
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
@@ -78,6 +82,7 @@ export function Modal({
           <button
             onClick={onClose}
             className="rounded-md p-1 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+            aria-label="Close"
           >
             <X className="w-4 h-4" />
           </button>
@@ -85,6 +90,7 @@ export function Modal({
 
         <div className="px-5 py-4 max-h-[80vh] overflow-y-auto">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

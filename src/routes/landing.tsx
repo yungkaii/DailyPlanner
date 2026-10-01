@@ -8,6 +8,7 @@ import { FeatureSection } from '../components/landing/FeatureSection';
 import { HowItWorks } from '../components/landing/HowItWorks';
 import { DashboardPreview } from '../components/landing/DashboardPreview';
 import { CTASection } from '../components/landing/CTASection';
+import { InstallSection } from '../components/landing/InstallSection';
 import { LandingFooter } from '../components/landing/LandingFooter';
 import { AuthModal } from '../components/auth/AuthModal';
 
@@ -40,6 +41,7 @@ export function LandingPage() {
         <FeatureSection />
         <HowItWorks />
         <DashboardPreview onOpenAuth={handleOpenAuth} />
+        <InstallSection />
         <CTASection onOpenAuth={handleOpenAuth} />
       </main>
 

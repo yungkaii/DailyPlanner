@@ -56,7 +56,8 @@
       "evening": "Malam",
       "anytime": "Kapan saja",
       "allRoutines": "Semua rutinitas"
-    }
+    },
+    "close": "Tutup"
   },
   "nav": {
     "today": "Hari Ini",
@@ -334,7 +335,8 @@
       "overview": "Pratinjau",
       "signIn": "Masuk",
       "getStarted": "Mulai Sekarang",
-      "openApp": "Buka Ruang Kerja"
+      "openApp": "Buka Ruang Kerja",
+      "install": "Unduh"
     },
     "hero": {
       "tag": "Perencanaan Tenang & Terarah",
@@ -404,6 +406,65 @@
       "privacy": "Privasi Terjaga",
       "privacyDesc": "Berjalan 100% lokal secara default. Tanpa pelacak.",
       "rights": "Hak cipta dilindungi. Dibuat dengan dedikasi."
+    }
+  },
+  "pwa": {
+    "tag": "Aplikasi Seluler",
+    "title": "Bawa RoutineUp ke layar utama.",
+    "subtitle": "Unduh RoutineUp sebagai aplikasi. Buka langsung dari layar utama, tetap jalan tanpa koneksi, dan lebih cepat saat memulai hari.",
+    "installCta": "Unduh Aplikasi",
+    "installed": "Tercpasang",
+    "installHint": "Tersedia untuk Android, iOS, dan desktop.",
+    "offlineNote": "Setelah terpasang, aplikasi tetap terbuka dan dapat dipakai tanpa koneksi internet.",
+    "features": {
+      "offline": {
+        "title": "Dapat diakses offline",
+        "desc": "Tetap buka jurnal dan catatan Anda tanpa internet."
+      },
+      "fast": {
+        "title": "Muat seketika",
+        "desc": "Awalnya cepat dan ringan di ponsel Anda."
+      },
+      "homeScreen": {
+        "title": "Seperti aplikasi biasa",
+        "desc": "Terbuka layar penuh tanpa address bar browser."
+      },
+      "noTrack": {
+        "title": "Tanpa pelacak",
+        "desc": "Berjalan lokal di perangkat, data tidak dikirim ke kami."
+      }
+    },
+    "guide": {
+      "ios": {
+        "title": "Pasang di iPhone / iPad",
+        "subtitle": "iOS hanya mengizinkan pemasangan lewat Safari.",
+        "step1": "Ketuk tombol Bagikan di Safari",
+        "step2": "Pilih \"Tambahkan ke Layar Utama\"",
+        "step3": "Ketuk \"Tambahkan\""
+      },
+      "chromium": {
+        "title": "Pasang di Komputer",
+        "subtitle": "Chrome dan Edge bisa memasang RoutineUp sebagai aplikasi desktop.",
+        "step1": "Klik ikon Pasang di address bar (ikon monitor dengan panah)",
+        "step2": "Atau klik ikon ⋮ → \"Cast, save and share\" → \"Install page as app\"",
+        "step3": "Konfirmasi \"Pasang\", RoutineUp akan terbuka di window sendiri"
+      },
+      "android": {
+        "title": "Pasang di Android",
+        "subtitle": "Ikuti langkah singkat ini untuk menambahkan ke layar utama.",
+        "step1": "Buka situs ini di Chrome",
+        "step2": "Ketuk tombol Unduh Aplikasi di halaman ini",
+        "step3": "Konfirmasi \"Pasang\" — ikon muncul di layar utama"
+      },
+      "unsupported": {
+        "title": "Browser ini belum mendukung",
+        "subtitle": "Safari dan Firefox di komputer belum bisa memasang aplikasi web.",
+        "step1": "Buka situs ini di Chrome, Edge, atau Opera",
+        "step2": "Di sana, klik tombol Unduh Aplikasi",
+        "step3": "Ikuti dialog konfirmasi yang muncul",
+        "note": "Alternatifnya, pakai menu Bagikan di Safari → \"Tambahkan ke Dock\" untuk menambahkannya ke Dock, meski bukan PWA penuh. Chrome dan Edge tetap cara paling mulus."
+      },
+      "secureContext": "Alamat situs ini bukan HTTPS, jadi Chrome tidak mengizinkan pemasangan. Buka lewat HTTPS atau localhost."
     }
   }
 }

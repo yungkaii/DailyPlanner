@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { InstallButton } from '../pwa/InstallButton';
 import { RevealOnScroll } from '../ui/RevealOnScroll';
 
 interface CTASectionProps {
@@ -45,6 +46,11 @@ export function CTASection({ onOpenAuth }: CTASectionProps) {
               >
                 {t('landing.nav.signIn')}
               </Button>
+              <InstallButton
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium justify-center border-border hover:bg-muted"
+              />
             </div>
           </div>
         </RevealOnScroll>

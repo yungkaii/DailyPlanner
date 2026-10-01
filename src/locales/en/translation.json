@@ -56,7 +56,8 @@
       "evening": "Evening",
       "anytime": "Anytime",
       "allRoutines": "All routines"
-    }
+    },
+    "close": "Close"
   },
   "nav": {
     "today": "Today",
@@ -334,7 +335,8 @@
       "overview": "Overview",
       "signIn": "Sign In",
       "getStarted": "Get Started",
-      "openApp": "Go to Workspace"
+      "openApp": "Go to Workspace",
+      "install": "Download"
     },
     "hero": {
       "tag": "Calm, Intentional Planning",
@@ -404,6 +406,65 @@
       "privacy": "Privacy First",
       "privacyDesc": "Runs 100% locally by default. Zero trackers.",
       "rights": "All rights reserved. Crafted with care."
+    }
+  },
+  "pwa": {
+    "tag": "Mobile App",
+    "title": "Take RoutineUp to your home screen.",
+    "subtitle": "Download RoutineUp as an app. Launch straight from your home screen, keep working without a connection, and get to your day faster.",
+    "installCta": "Download App",
+    "installed": "Installed",
+    "installHint": "Available on Android, iOS, and desktop.",
+    "offlineNote": "Once installed, the app opens and works without an internet connection.",
+    "features": {
+      "offline": {
+        "title": "Works offline",
+        "desc": "Open your journal and notes with no internet."
+      },
+      "fast": {
+        "title": "Instant load",
+        "desc": "Fast and light on launch from your phone."
+      },
+      "homeScreen": {
+        "title": "Like a real app",
+        "desc": "Opens full screen with no browser address bar."
+      },
+      "noTrack": {
+        "title": "No tracking",
+        "desc": "Runs locally on your device; data is never sent to us."
+      }
+    },
+    "guide": {
+      "ios": {
+        "title": "Install on iPhone / iPad",
+        "subtitle": "iOS only allows installs from Safari.",
+        "step1": "Tap the Share button in Safari",
+        "step2": "Choose \"Add to Home Screen\"",
+        "step3": "Tap \"Add\""
+      },
+      "chromium": {
+        "title": "Install on Desktop",
+        "subtitle": "Chrome and Edge can install RoutineUp as a desktop app.",
+        "step1": "Click the install icon in the address bar (monitor with arrow)",
+        "step2": "Or click ⋮ → \"Cast, save and share\" → \"Install page as app\"",
+        "step3": "Confirm \"Install\" — RoutineUp opens in its own window"
+      },
+      "android": {
+        "title": "Install on Android",
+        "subtitle": "Follow these steps to add it to your home screen.",
+        "step1": "Open this site in Chrome",
+        "step2": "Tap the Download App button on this page",
+        "step3": "Confirm \"Install\" — the icon appears on your home screen"
+      },
+      "unsupported": {
+        "title": "This browser is not supported yet",
+        "subtitle": "Safari and Firefox on desktop cannot install web apps.",
+        "step1": "Open this site in Chrome, Edge or Opera instead",
+        "step2": "There, tap the Download App button",
+        "step3": "Follow the confirmation dialog that appears",
+        "note": "As an alternative, use Safari's Share → \"Add to Dock\" — it adds the site to your Dock, though not as a full PWA. Chrome and Edge remain the smoothest option."
+      },
+      "secureContext": "This page is not served over HTTPS, so Chrome blocks installation. Open it over HTTPS or on localhost."
     }
   }
 }
